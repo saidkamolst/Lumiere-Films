@@ -27,11 +27,13 @@ public class StaffManager {
                 addStaffMember();
                 break;
             case 3:
+                editStaffMember();
                 break;
             case 4:
                 deleteStaffMember();
                 break;
             case 5:
+                SearchStaffMember();
                 break;
             case 6:
                 return false;
@@ -83,7 +85,6 @@ public class StaffManager {
                 System.out.println("Staff member added successfully!");
             } else {
                 System.out.println("Invalid choice or user moved back");
-                return;
             }
         }
     }
@@ -97,15 +98,80 @@ public class StaffManager {
         viewAllStaff();
         int staffIndex = MyUtils.selectChoice(StaffMember.staffSize) - 1;
 
-        System.out.println("You can type X to go back");
+        System.out.print("Are you sure? (y/n): ");
+        String choiceValidation = scanner.nextLine();
+        if (choiceValidation.equalsIgnoreCase("y") || choiceValidation.equalsIgnoreCase("yes"))
+        {
+            for (int i = staffIndex; i < StaffMember.staffSize - 1; i++) {
+                staffMembers[i] = staffMembers[i + 1];
+            }
 
-        for (int i = staffIndex; i < StaffMember.staffSize - 1; i++) {
-            staffMembers[i] = staffMembers[i + 1];
+            staffMembers[StaffMember.staffSize - 1] = null;
+            StaffMember.staffSize--;
+
+            System.out.println("Staff member removed successfully!");
+        } else {
+            System.out.println("Invalid choice or user moved back");
+        }
+    }
+    void editStaffMember()
+    {
+        if (StaffMember.staffSize == 0) {
+            System.out.println("No staff member found to EDIT");
+            return;
         }
 
-        staffMembers[StaffMember.staffSize - 1] = null;
-        StaffMember.staffSize--;
+        viewAllStaff();
 
-        System.out.println("Staff member removed successfully!");
+        int indexToEdit = MyUtils.selectChoice(StaffMember.staffSize) - 1;
+
+        System.out.println("Type 1 = to edit the name");
+        System.out.println("Type 2 = to edit the role");
+        System.out.println("Type 3 = to edit both");
+
+        int editChoice = MyUtils.selectChoice(3);
+
+        String editedName = "";
+        String editedRole = "";
+
+        if (editChoice == 1)
+        {
+            System.out.print("Enter your staff's edited name: ");
+            editedName = scanner.nextLine();
+        } else if (editChoice == 2) {
+            System.out.print("Enter your staff's edited role: ");
+            editedRole = scanner.nextLine();
+        } else {
+            System.out.print("Enter your staff's edited name: ");
+            editedName = scanner.nextLine();
+            System.out.print("Enter your staff's edited role: ");
+            editedRole = scanner.nextLine();
+        }
+
+        System.out.print("Are you sure? (y/n): ");
+        String choiceValidation = scanner.nextLine();
+        if (choiceValidation.equalsIgnoreCase("y") || choiceValidation.equalsIgnoreCase("yes"))
+        {
+            if(editChoice == 1)
+            {
+                staffMembers[indexToEdit].name = editedName;
+            } else if (editChoice == 2) {
+                staffMembers[indexToEdit].role = editedRole;
+            } else {
+                staffMembers[indexToEdit].name = editedName;
+                staffMembers[indexToEdit].role = editedRole;
+            }
+            System.out.println("Staff member edited successfully!");
+        } else {
+            System.out.println("Invalid choice or user moved back");
+        }
+    }
+    void SearchStaffMember()
+    {
+        if (StaffMember.staffSize == 0) {
+            System.out.println("No staff member found to SEARCH");
+            return;
+        }
+
     }
 }

@@ -12,7 +12,7 @@ public class MyUtils {
                 if(choice > 0 && choice <= maxSize){
                     return choice;
                 }else{
-                    System.out.println("Invalid number! Please try again.");
+                    System.out.println("Invalid number(range)! Please try again.");
                 }
             }else {
                 System.out.println("Please enter a valid NUMBER.");
