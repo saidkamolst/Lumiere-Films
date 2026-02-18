@@ -98,8 +98,7 @@ public class FilmManager {
             String choiceValidation = scanner.nextLine();
             if (choiceValidation.equalsIgnoreCase("y") || choiceValidation.equalsIgnoreCase("yes"))
             {
-                Films.films[Films.filmCount] = new Films(newFilmName, newFilmGenre, newFilmReleaseDate);
-                Films.filmCount++;
+                Films.addFilm(newFilmName, newFilmGenre, newFilmGenre);
                 System.out.println("Film added successfully");
             }
             else
