@@ -10,9 +10,9 @@ public class FilmManager {
         do {
             System.out.println("———————————————————"+"\n\tFilm Catalogue submenu:");
             System.out.println("1. View All Films");
-            System.out.println("2. Add Film ");
-            System.out.println("3. Edit Film - not working");
-            System.out.println("4. Delete Film -  not working");
+            System.out.println("2. Add Film");
+            System.out.println("3. Edit Film");
+            System.out.println("4. Delete Film");
             System.out.println("5. Sort Films - not working");
             System.out.println("6. Back to Main Menu");
             System.out.print("———————————————————");
@@ -111,8 +111,41 @@ public class FilmManager {
     }
 
     void editFilm()
-    {
-        return;
+     {
+        if (Films.filmCount == 0) {
+            System.out.println("No films found to EDIT");
+            return;
+        }
+
+        viewAllFilms();
+
+
+        int filmIndexToEdit = MyUtils.selectChoice(Films.filmCount) - 1;
+
+        System.out.print("Enter your film's edited name (write 'pass' to keep unchanged): ");
+        String editedName = scanner.nextLine();
+
+        System.out.print("Enter your film's edited genre (write 'pass' to keep unchanged): ");
+        String editedGenre = scanner.nextLine();
+
+        System.out.print("Enter your film's edited date of release (write 'pass' to keep unchanged): ");
+        String editedReleaseDate = scanner.nextLine();
+
+        System.out.print("Are you sure? (y/n): ");
+        String choiceValidation = scanner.nextLine();
+
+        if (choiceValidation.equalsIgnoreCase("y") || choiceValidation.equalsIgnoreCase("yes"))
+        {
+            Films.editFilm(filmIndexToEdit, editedName, editedGenre, editedReleaseDate);
+            System.out.println("Film edited successfully!");
+
+        }
+        else
+        {
+            System.out.println("Invalid choice or user moved back");
+
+        }
+
     }
 
     void deleteFilm()
@@ -137,7 +170,6 @@ public class FilmManager {
     }
 
     void sortFilms()
-    {
-        return;
-    }
+    {return;}
+
 }
