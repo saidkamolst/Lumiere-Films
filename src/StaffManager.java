@@ -3,10 +3,9 @@ import java.util.Scanner;
 public class StaffManager {
     StaffMember[] staffMembers = new StaffMember[100];
     Scanner scanner = new Scanner(System.in);
-    public void showSubMenu()
-    {
+    public void showSubMenu() {
         do {
-            System.out.println("———————————————————"+"\n\tStaff submenu:");
+            System.out.println("———————————————————" + "\n\tStaff submenu:");
             System.out.println("1. View All Staff");
             System.out.println("2. Add Staff Member");
             System.out.println("3. Edit Staff Member");
@@ -16,10 +15,8 @@ public class StaffManager {
             System.out.print("———————————————————");
         } while (selectSubMenu());
     }
-    boolean selectSubMenu()
-    {
-        switch (MyUtils.selectChoice(6))
-        {
+    boolean selectSubMenu() {
+        switch (MyUtils.selectChoice(6)) {
             case 1:
                 viewAllStaff();
                 break;
@@ -33,54 +30,48 @@ public class StaffManager {
                 deleteStaffMember();
                 break;
             case 5:
-                SearchStaffMember();
+                searchStaffMember();
                 break;
             case 6:
                 return false;
         }
         return true;
     }
-    void viewAllStaff()
-    {
-        System.out.println("———————————————————"+"\nAll Staff Members");
-        if(StaffMember.staffSize == 0)
-        {
+
+    void viewAllStaff() {
+        System.out.println("———————————————————" + "\nAll Staff Members");
+        if (StaffMember.staffSize == 0) {
             System.out.println("No staff members found.");
-        }else {
+        } else {
             System.out.println("\nNo. | Name                    | Role");
             System.out.println("----+-------------------------+-------------------------");
             for (int i = 0; i < StaffMember.staffSize; i++) {
-                if(staffMembers[i] != null)
-                {
+                if (staffMembers[i] != null) {
                     System.out.printf("%-3d | %-23s | %-23s\n",
                             (i + 1), staffMembers[i].name, staffMembers[i].role);
                 }
             }
         }
     }
-    void addStaffMember()
-    {
-        if (StaffMember.staffSize == 100)
-        {
+
+    void addStaffMember() {
+        if (StaffMember.staffSize == 100) {
             System.out.println("Your staff is full");
-        } else{
+        } else {
             System.out.print("Add staff's name (or type X to cancel): ");
             String newStaffName = scanner.nextLine();
-            if (newStaffName.equalsIgnoreCase("x"))
-            {
+            if (newStaffName.equalsIgnoreCase("x")) {
                 return;
             }
             System.out.print("Add staff's role (or type X to cancel): ");
             String newStaffRole = scanner.nextLine();
-            if (newStaffRole.equalsIgnoreCase("x"))
-            {
+            if (newStaffRole.equalsIgnoreCase("x")) {
                 return;
             }
             System.out.print("Are you sure? (y/n): ");
             String choiceValidation = scanner.nextLine();
-            if (choiceValidation.equalsIgnoreCase("y") || choiceValidation.equalsIgnoreCase("yes"))
-            {
-                staffMembers[StaffMember.staffSize] = new StaffMember(newStaffName,  newStaffRole);
+            if (choiceValidation.equalsIgnoreCase("y") || choiceValidation.equalsIgnoreCase("yes")) {
+                staffMembers[StaffMember.staffSize] = new StaffMember(newStaffName, newStaffRole);
                 StaffMember.staffSize++;
                 System.out.println("Staff member added successfully!");
             } else {
@@ -88,8 +79,8 @@ public class StaffManager {
             }
         }
     }
-    void deleteStaffMember()
-    {
+
+    void deleteStaffMember() {
         if (StaffMember.staffSize == 0) {
             System.out.println("No staff member found to DELETE");
             return;
@@ -100,8 +91,7 @@ public class StaffManager {
 
         System.out.print("Are you sure? (y/n): ");
         String choiceValidation = scanner.nextLine();
-        if (choiceValidation.equalsIgnoreCase("y") || choiceValidation.equalsIgnoreCase("yes"))
-        {
+        if (choiceValidation.equalsIgnoreCase("y") || choiceValidation.equalsIgnoreCase("yes")) {
             for (int i = staffIndex; i < StaffMember.staffSize - 1; i++) {
                 staffMembers[i] = staffMembers[i + 1];
             }
@@ -114,8 +104,8 @@ public class StaffManager {
             System.out.println("Invalid choice or user moved back");
         }
     }
-    void editStaffMember()
-    {
+
+    void editStaffMember() {
         if (StaffMember.staffSize == 0) {
             System.out.println("No staff member found to EDIT");
             return;
@@ -134,8 +124,7 @@ public class StaffManager {
         String editedName = "";
         String editedRole = "";
 
-        if (editChoice == 1)
-        {
+        if (editChoice == 1) {
             System.out.print("Enter your staff's edited name: ");
             editedName = scanner.nextLine();
         } else if (editChoice == 2) {
@@ -150,10 +139,8 @@ public class StaffManager {
 
         System.out.print("Are you sure? (y/n): ");
         String choiceValidation = scanner.nextLine();
-        if (choiceValidation.equalsIgnoreCase("y") || choiceValidation.equalsIgnoreCase("yes"))
-        {
-            if(editChoice == 1)
-            {
+        if (choiceValidation.equalsIgnoreCase("y") || choiceValidation.equalsIgnoreCase("yes")) {
+            if (editChoice == 1) {
                 staffMembers[indexToEdit].name = editedName;
             } else if (editChoice == 2) {
                 staffMembers[indexToEdit].role = editedRole;
@@ -166,12 +153,39 @@ public class StaffManager {
             System.out.println("Invalid choice or user moved back");
         }
     }
-    void SearchStaffMember()
-    {
+
+    void searchStaffMember() {
         if (StaffMember.staffSize == 0) {
             System.out.println("No staff member found to SEARCH");
             return;
         }
+
+        StaffMember[] resultMembers = new StaffMember[100];
+        int count = 0;
+
+        System.out.print("Add staff's name to search: ");
+        String searchName = scanner.nextLine().trim().toLowerCase();
+
+        for (int i = 0; i < StaffMember.staffSize; i++) {
+            String currentStaffName = staffMembers[i].name.toLowerCase();
+            if (currentStaffName.contains(searchName)) {
+                resultMembers[count] = staffMembers[i];
+                count++;
+            }
+        }
+        if (count == 0) {
+            System.out.println("No staff members found.");
+        } else {
+            System.out.println("\nNo. | Name                    | Role");
+            System.out.println("----+-------------------------+-------------------------");
+            for (int i = 0; i < count; i++) {
+                if (resultMembers[i] != null) {
+                    System.out.printf("%-3d | %-23s | %-23s\n",
+                            (i + 1), resultMembers[i].name, resultMembers[i].role);
+                }
+            }
+        }
+
 
     }
 }
