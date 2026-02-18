@@ -28,6 +28,15 @@ public class Films {
         Films.filmCount++;
     }
 
+    static void deleteFilm(int filmIndex){
+         for (int i = filmIndex; i < Films.filmCount - 1; i++) {
+                Films.films[i] = Films.films[i + 1];
+            }
+
+            Films.films[Films.filmCount - 1] = null;
+            Films.filmCount--;
+    }
+
 
 
 }

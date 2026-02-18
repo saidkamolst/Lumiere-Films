@@ -48,7 +48,7 @@ public class FilmManager {
         System.out.println("———————————————————"+"\nAll Films");
         if(Films.filmCount == 0)
         {
-            System.out.println("No films members found.");
+            System.out.println("No films found.");
         }
         else
         {
@@ -117,7 +117,23 @@ public class FilmManager {
 
     void deleteFilm()
     {
-        return;
+        viewAllFilms();
+        int filmIndex = MyUtils.selectChoice(Films.filmCount) - 1;
+
+        System.out.print("Are you sure? (y/n): ");
+        String choiceValidation = scanner.nextLine();
+        if (choiceValidation.equalsIgnoreCase("y") || choiceValidation.equalsIgnoreCase("yes"))
+        {
+            Films.deleteFilm(filmIndex);
+
+            System.out.println("Film removed successfully!");
+
+        }
+        else
+        {
+            System.out.println("Invalid choice or user moved back");
+
+        }
     }
 
     void sortFilms()
