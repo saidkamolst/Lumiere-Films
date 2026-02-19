@@ -1,4 +1,3 @@
-import java.nio.file.FileAlreadyExistsException;
 import java.util.Scanner;
 
 public class FilmManager {
@@ -14,7 +13,8 @@ public class FilmManager {
             System.out.println("3. Edit Film");
             System.out.println("4. Delete Film");
             System.out.println("5. Sort Films - not working");
-            System.out.println("6. Back to Main Menu");
+            System.out.println("6. Filter Films Films - not working");
+            System.out.println("7. Back to Main Menu");
             System.out.print("———————————————————");
         } while (selectSubMenu());
     }
@@ -35,8 +35,12 @@ public class FilmManager {
                 deleteFilm();
                 break;
             case 5:
+                sortFilms();
                 break;
             case 6:
+                filterFilms();
+                break;
+            case 7:
                 return false;
         }
         return true;
@@ -170,6 +174,59 @@ public class FilmManager {
     }
 
     void sortFilms()
-    {return;}
+    {
+        if (Films.filmCount == 0)
+        {
+            System.out.println("No films found.");
+            return;
+        }
+
+        System.out.println("Choose an option to sort by:");
+        System.out.println("1. Name (Alphabetical)");
+        System.out.println("2. Date (Chronological)");
+        System.out.print("Enter choice (1 or 2): ");
+
+        Films[] sortedFilms = null;
+
+        if (scanner.hasNextInt()) {
+            int sortChoice = scanner.nextInt();
+            if (sortChoice == 1 || sortChoice == 2) {
+                sortedFilms = Films.sortFilms(sortChoice);
+            }
+            else
+            {
+                System.out.println("Invalid option! ");
+                return;
+            }
+        }
+        else
+        {
+            System.out.println("That's not a number.");
+            scanner.next();
+            return;
+
+        }
+
+        if(sortedFilms == null)
+        {
+            System.out.println("No films found.");
+        }
+        else {
+            System.out.println("\nNo. | Name                    | Genre                     | Release date");
+            System.out.println("----+-------------------------+-------------------------+-------------------------");
+            for (int i = 0; i < Films.filmCount; i++) {
+                if (sortedFilms[i] != null) {
+                    System.out.printf("%-3d | %-23s | %-23s | %-23s\n",
+                            (i + 1), sortedFilms[i].name, sortedFilms[i].genre, sortedFilms[i].dateOfRelease
+                    );
+                }
+            }
+        }
+    }
+
+    void filterFilms()
+    {
+        return;
+    }
 
 }
